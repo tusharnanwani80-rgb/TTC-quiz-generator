@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTC Admin | Quiz Generator</title>
+    <title>TTC Admin | Godmode Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Righteous&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -142,7 +142,7 @@
             height: 450px;
             resize: vertical;
             white-space: pre-wrap;
-            font-family: 'Courier New', Courier, monospace; /* Monospace makes checking formatting easier */
+            font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
             line-height: 1.5;
         }
@@ -239,11 +239,11 @@
 <!-- MASTER TEMPLATE (HIDDEN)                   -->
 <!-- ========================================== -->
 <textarea id="master-template" style="display:none;">---
-title: "How I Taught My Grandmother to Read"
-class: "Class 9th CBSE"
-subject: "English"
-questions: "40"
-description: "Comprehensive literature check on Sudha Murty's heartwarming chapter."
+title: "{{GEN_CHAPTER}}"
+class: "{{GEN_CLASS}}"
+subject: "{{GEN_SUBJECT}}"
+questions: "{{GEN_QCOUNT}}"
+description: "Comprehensive quiz practice for {{GEN_CHAPTER}}."
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -775,7 +775,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
     <div class="scene s0" id="s0"><div class="dots-bg"></div><div class="hey-emoji">🎉</div><div class="hey-text">HEY!</div><div class="hey-sub">Something awesome just dropped!</div><div class="pill-row"><div class="pill">✨ New</div><div class="pill">🆓 Free</div><div class="pill">⚡ Updated</div></div></div>
     <div class="scene s1" id="s1"><div class="cd-ring"><div class="cd-ring-inner"><div class="cd-num" id="cdNum">3</div></div></div><div class="cd-label">GET READY!</div></div>
     <div class="scene s2" id="s2"><div class="burst-bg"></div><div class="logo-ring"><img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" alt="TTC"></div><div class="big-ttc">TTC</div><div class="big-quiz">QUIZ</div><div class="v2-tag">✅ VERSION 2.0 — UPDATED</div></div>
-    <div class="scene s3" id="s3"><div class="feat-title">✨ What's Inside?</div><div class="feat-list"><div class="fcard c1"><div class="ficon">📖</div><div class="finfo"><div class="flabel">Subject</div><div class="fval">English Literature</div></div></div><div class="fcard c2"><div class="ficon">🎯</div><div class="finfo"><div class="flabel">Challenge</div><div class="fval">39 Questions</div></div><div class="fbadge new">NEW</div></div><div class="fcard c3"><div class="ficon">💡</div><div class="finfo"><div class="flabel">Mode</div><div class="fval">Instant Explanations</div></div><div class="fbadge v2">V2</div></div><div class="fcard c4"><div class="ficon">📤</div><div class="finfo"><div class="flabel">Share</div><div class="fval">WhatsApp Your Score!</div></div></div></div></div>
+    <div class="scene s3" id="s3"><div class="feat-title">✨ What's Inside?</div><div class="feat-list"><div class="fcard c1"><div class="ficon">📖</div><div class="finfo"><div class="flabel">Subject</div><div class="fval">{{GEN_SUBJECT}}</div></div></div><div class="fcard c2"><div class="ficon">🎯</div><div class="finfo"><div class="flabel">Challenge</div><div class="fval">{{GEN_QCOUNT}} Questions</div></div><div class="fbadge new">NEW</div></div><div class="fcard c3"><div class="ficon">💡</div><div class="finfo"><div class="flabel">Mode</div><div class="fval">Instant Explanations</div></div><div class="fbadge v2">V2</div></div><div class="fcard c4"><div class="ficon">📤</div><div class="finfo"><div class="flabel">Share</div><div class="fval">WhatsApp Your Score!</div></div></div></div></div>
     <div class="scene s4" id="s4"><div class="confetti-bg"></div><div class="zigzag"></div><div class="zigzag-bot"></div><div class="update-badge">🚀 BIG UPDATE</div><div class="update-headline">BIGGER<br>&amp; BETTER!</div><div class="update-items"><div class="uitem"><div class="uicon">⚡</div><div class="utxt">Faster &amp; smoother than ever</div></div><div class="uitem"><div class="uicon">🏆</div><div class="utxt">Scored + full explanations</div></div><div class="uitem"><div class="uicon">💬</div><div class="utxt">Share results on WhatsApp</div></div></div></div>
     <div class="scene s5" id="s5"><div class="top-wave"></div><div class="stars-row"><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span></div><div class="cta-logo-wrap"><img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" alt="TTC"></div><div class="cta-main-title">TTC <span>QUIZ</span></div><div class="cta-subtitle">is here! 🎉</div><div class="tag-row"><div class="tag t1">Free</div><div class="tag t2">Instant</div><div class="tag t3">Fun!</div></div><button class="play-btn" onclick="launchQuiz()">▶ Play Now!</button><div class="cta-tagline">Tushar Tuition Classes · Wardha</div></div>
     <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
@@ -801,7 +801,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <h2 id="welcomeText"></h2>
       <p class="sub">Ready to prove yourself? 💪</p>
       <div class="info-strip">
-        <div class="info-pill">📖 How I Taught My Grandmother to Read</div><div class="info-pill">39 Questions</div>
+        <div class="info-pill">📖 {{GEN_CHAPTER}}</div><div class="info-pill">{{GEN_QCOUNT}} Questions</div>
         <div class="info-pill">🏆 Scored</div><div class="info-pill">⏱ Self-paced</div>
       </div>
       <button class="btn btn-blue" onclick="startQuiz()">Start Quiz 🚀</button>
@@ -870,7 +870,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
             </div>
 
             <div class="progress-wrap">
-                <div class="progress-meta"><span id="qCounter">Q 1 / 39</span><span id="qScore">Score: 0</span></div>
+                <div class="progress-meta"><span id="qCounter">Q 1 / {{GEN_QCOUNT}}</span><span id="qScore">Score: 0</span></div>
                 <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
             </div>
             <p class="question-text" id="question"></p>
@@ -885,7 +885,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       <img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" class="logo" alt="TTC">
       <div class="chip" id="resultChip">✦ Quiz Done!</div>
       <div class="score-block">
-        <div><span class="score-number" id="scoreNum">0</span><span class="score-denom" id="scoreDenom">/39</span></div>
+        <div><span class="score-number" id="scoreNum">0</span><span class="score-denom" id="scoreDenom">/{{GEN_QCOUNT}}</span></div>
         <div class="score-pct" id="scorePct">0%</div>
       </div>
       <div class="fb-box"><span class="fb-emoji" id="fbEmoji"></span><strong id="fbTitle"></strong><p id="fbMsg"></p></div>
@@ -1111,10 +1111,8 @@ document.getElementById('startBtn').addEventListener('click',()=>{document.getEl
 /* ════════════════════════
    QUIZ DATA
 ════════════════════════ */
-const subjectName="English", chapterName="How I Taught My Grandmother to Read";
-const quizData=[
-  {question:"What is the full form of TTC?",options:["The Teaching Council","Tushar Tuition Classes","Tushar Timing Classes","Technical Training College"],correct:"Tushar Tuition Classes",explanation:"TTC bole to Tushar Tuition Classes 😏"}
-];
+const subjectName="{{GEN_SUBJECT}}", chapterName="{{GEN_CHAPTER}}";
+const quizData={{GEN_QUIZDATA}};
  
 let username='', questions=[], qIndex=0, score=0;
 let streak=0;
@@ -1653,31 +1651,22 @@ document.getElementById("ratingBtn").addEventListener("click",function(){
             // Extract the hidden master template exact string
             let templateStr = document.getElementById('master-template').value;
             
-            // 1. Replace the Front Matter block dynamically
-            templateStr = templateStr.replace(/---\n[\s\S]*?---\n/, 
-`---
-title: "${chapter}"
-class: "${className}"
-subject: "${subject}"
-questions: "${questions.length}"
-description: "Comprehensive literature check on ${chapter}."
----
-`);
+            // ---------------------------------------------------------
+            // THE GODMODE TOKEN REPLACEMENT (100% ACCURATE EVERY TIME)
+            // ---------------------------------------------------------
             
-            // 2. Replace the hardcoded Subject and Chapter Name inside JS
-            templateStr = templateStr.replace(
-                /const subjectName="[^"]*", chapterName="[^"]*";/,
-                `const subjectName="${subject}", chapterName="${chapter}";`
-            );
+            // Replace text values everywhere they appear in the UI and Front Matter
+            templateStr = templateStr.replace(/\{\{GEN_CHAPTER\}\}/g, chapter);
+            templateStr = templateStr.replace(/\{\{GEN_CLASS\}\}/g, className);
+            templateStr = templateStr.replace(/\{\{GEN_SUBJECT\}\}/g, subject);
+            templateStr = templateStr.replace(/\{\{GEN_QCOUNT\}\}/g, questions.length);
 
-            // 3. Replace the quizData Array perfectly and safely
-            // Looking for: const quizData=[ ... ]; \n\n let username=...
-            templateStr = templateStr.replace(
-                /const quizData=\s*\[[\s\S]*?\];\s*let username=/m,
-                `const quizData=${JSON.stringify(questions, null, 4)};\n \nlet username=`
-            );
+            // Replace the JSON array string safely (using a function callback prevents regex corruption if text has $ signs)
+            templateStr = templateStr.replace(/\{\{GEN_QUIZDATA\}\}/g, () => JSON.stringify(questions, null, 4));
 
-            // 4. Download it using a perfect GitHub friendly name format
+            // ---------------------------------------------------------
+            
+            // Download it using a perfect GitHub friendly name format
             downloadFile(className, subject, chapter, templateStr);
             
             status.innerHTML = `<span class="success">✅ Boom! Generated ${questions.length} questions and downloaded the file instantly.</span>`;
