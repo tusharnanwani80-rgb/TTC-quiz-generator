@@ -1,0 +1,23 @@
+{
+  "name": "TTC Godmode Admin",
+  "short_name": "TTC Admin",
+  "description": "The automated TTC Quiz Generator and Publisher.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F5F4FF",
+  "theme_color": "#4361EE",
+  "icons": [
+    {
+      "src": "icon-quizgen.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-quizgen.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
