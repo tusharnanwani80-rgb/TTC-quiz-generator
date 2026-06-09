@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
     <title>TTC Admin | Godmode Generator</title>
     
     <!-- PWA Manifest & Icons -->
@@ -430,7 +429,7 @@ description: "Comprehensive MCQ Quiz practice for {{GEN_CHAPTER}}."
 <title>{{ seo_title }}</title>
 <meta name="description" content="{{ seo_description | escape }}">
 <meta name="robots" content="index, follow">
-<link rel=\"canonical\" href=\"{{ page.url | absolute_url }}\">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="TTC Quiz Platform">
 <meta property="og:title" content="{{ seo_title | escape }}">
@@ -1095,7 +1094,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
       </div>
 
       <button class="btn btn-green" onclick="shareWhatsApp()">📤 Share on WhatsApp</button>
-      <button class="btn btn-blue" onclick="downloadStudentPdf()">Download PDF Report</button>
+      <button id="pdfBtn" class="btn btn-blue" onclick="downloadStudentPdf()">Download PDF Report</button>
       <button id="ratingBtn" class="btn btn-pink">⭐ Rate Us on Google</button>
       <button class="btn btn-ghost" onclick="restartQuiz()">↺ Try Again</button>
       <div class="divider">What others say</div>
@@ -1621,6 +1620,13 @@ function submitQuizFeedback(){
 }
 
 async function downloadStudentPdf(){
+  const pdfBtn = document.getElementById('pdfBtn');
+  if(pdfBtn) {
+    pdfBtn.innerText = "⏳ Generating PDF...";
+    pdfBtn.style.opacity = "0.7";
+    pdfBtn.style.pointerEvents = "none";
+  }
+
   const total = questions.length || quizData.length;
   const pct = total ? Math.round((score / total) * 100) : 0;
   const report = {
@@ -1638,7 +1644,14 @@ async function downloadStudentPdf(){
     timestamp: new Date().toLocaleString('en-IN'),
     answers: answerLog
   };
+  
   await createTtcQuizPdf(report, `TTC_${safePdfName(report.name)}_${safePdfName(report.chapter)}_Report.pdf`);
+
+  if(pdfBtn) {
+    pdfBtn.innerText = "Download PDF Report";
+    pdfBtn.style.opacity = "1";
+    pdfBtn.style.pointerEvents = "auto";
+  }
 }
 
 function safePdfName(str){ return String(str||'').replace(/[^a-z0-9]/gi, '_').toLowerCase() || 'unknown'; }
@@ -1667,31 +1680,44 @@ async function createTtcQuizPdf(report, fileName){
     teal: '#207C78', tealDark: '#2F6FAF', tealSoft: '#DDF3EF',
     cream: '#FFF8EF', mustard: '#F7B84B', white: '#FFFFFF',
     ink: '#243447', body: '#64748B', line: '#E8DED2',
-    green: '#2E8B57', red: '#D95B72'
+    green: '#2E8B57', red: '#D95B72',
+    paleGreen: '#EAF8EF', paleRed: '#FFF0F4'
   };
   const assets = await loadPdfAssets();
-  const panelX = 30, panelW = pageW - 60, firstPanelY = 118, otherPanelY = 38;
-  const contentX = 58, bottomLimit = pageH - 82;
+  const margin = 30;
+  const panelW = pageW - margin*2;
+  const bottomLimit = pageH - 82;
   let y = 0;
 
-  function clean(value){ return String(value ?? '').replace(/[^\x09\x0A\x0D\x20-\x7E\u00A0-\u024F]/g, '').replace(/\s+/g, ' ').trim(); }
+  function clean(value){ 
+    return String(value ?? '')
+      .replace(/<[^>]*>?/gm, '') // Strip HTML tags
+      .replace(/[^\x09\x0A\x0D\x20-\x7E\u00A0-\u024F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim(); 
+  }
   function wrap(text, width, size, weight='normal'){ doc.setFont('helvetica', weight); doc.setFontSize(size); return doc.splitTextToSize(clean(text), width); }
   function withOpacity(opacity, draw){ let used=false; try{ doc.setGState(new doc.GState({ opacity })); used=true; }catch(e){} draw(); if(used){ try{ doc.setGState(new doc.GState({ opacity: 1 })); }catch(e){} } }
-  function drawImage(asset, x, imgY, w, h){ if(!asset || !asset.data) return; try{ doc.addImage(asset.data, asset.type || 'PNG', x, imgY, w, h); }catch(e){} }
-  function drawImageContain(asset, cx, cy, maxW, maxH){ if(!asset || !asset.data) return; const scale=Math.min(maxW/(asset.width||maxW), maxH/(asset.height||maxH)); const w=(asset.width||maxW)*scale, h=(asset.height||maxH)*scale; drawImage(asset, cx-w/2, cy-h/2, w, h); }
+  function drawImageContain(asset, cx, cy, maxW, maxH){ 
+    if(!asset || !asset.data) return; 
+    const scale = Math.min(maxW / (asset.width || maxW), maxH / (asset.height || maxH)); 
+    const w = (asset.width || maxW) * scale;
+    const h = (asset.height || maxH) * scale; 
+    try { doc.addImage(asset.data, asset.type, cx - w/2, cy - h/2, w, h); } catch(e){} 
+  }
   function secondsToText(sec){ sec=parseInt(sec||0); return sec>=60 ? `${Math.floor(sec/60)}m ${sec%60}s` : `${sec}s`; }
 
   function pageBase(firstPage=false){
-    const panelY = firstPage ? firstPanelY : otherPanelY;
+    const panelY = firstPage ? 118 : 38;
     const panelH = pageH - panelY - 50;
     doc.setFillColor(colors.page); doc.rect(0, 0, pageW, pageH, 'F');
     if (firstPage) { doc.setFillColor(colors.header); doc.rect(0, 0, pageW, 98, 'F'); }
-    doc.setFillColor(colors.cream); doc.roundedRect(panelX, panelY, panelW, panelH, 24, 24, 'F');
+    doc.setFillColor(colors.cream); doc.roundedRect(margin, panelY, panelW, panelH, 24, 24, 'F');
     if (firstPage) {
-      drawImage(assets.logo, 48, 24, 52, 52);
+      if(assets.logo) drawImageContain(assets.logo, margin + 42, 48, 48, 48);
       doc.setTextColor(colors.white); doc.setFont('helvetica', 'bold'); doc.setFontSize(30); doc.text('TTC Quiz Results', 116, 48);
       doc.setFont('helvetica', 'normal'); doc.setFontSize(13); doc.text('Tushar Tuition Classes, Wardha', 118, 70);
-      drawImage(assets.qr, pageW - 98, 25, 52, 52);
+      if(assets.qr) drawImageContain(assets.qr, pageW - margin - 42, 48, 48, 48);
     }
   }
   function drawFootersAndWatermark(){
@@ -1701,7 +1727,7 @@ async function createTtcQuizPdf(report, fileName){
       withOpacity(0.07, () => drawImageContain(assets.watermark, pageW/2, pageH/2 + 35, 350, 210));
       doc.setTextColor('#6E8398'); doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
       doc.text(`Page ${i} of ${pages}`, pageW - 92, pageH - 24);
-      doc.text('Generated by TTC Quiz System', 48, pageH - 24);
+      doc.text('Generated by TTC Quiz System', margin + 18, pageH - 24);
     }
   }
   function newPage(){ doc.addPage(); pageBase(false); y = 76; }
@@ -1711,8 +1737,17 @@ async function createTtcQuizPdf(report, fileName){
     doc.setTextColor(colors.teal); doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.text(clean(label).toUpperCase(), x+18, statY+24);
     doc.setTextColor(colors.ink); doc.setFontSize(19); doc.text(wrap(value, w-36, 19, 'bold').slice(0,1), x+18, statY+52);
   }
+  function drawBadge(text, x, badgeY, fill, color){
+    doc.setFillColor(fill);
+    doc.roundedRect(x, badgeY, 84, 24, 12, 12, 'F');
+    doc.setTextColor(color);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.text(text, x + 13, badgeY + 16);
+  }
 
   pageBase(true); y = 150;
+  const contentX = margin + 28;
   const subjectLine = clean(`${report.subject || ''}${report.chapter ? ' | ' + report.chapter : ''}`);
   doc.setTextColor(colors.ink); doc.setFont('helvetica', 'bold'); doc.setFontSize(24); doc.text('Performance Summary', contentX, y);
   y += 22;
@@ -1740,29 +1775,85 @@ async function createTtcQuizPdf(report, fileName){
   const answers = report.answers || [];
   if(!answers.length){ doc.setTextColor(colors.body); doc.setFont('helvetica', 'normal'); doc.setFontSize(15); doc.text(wrap('No detailed answer log was found for this attempt.', panelW - 76, 15), contentX, y); }
 
-  answers.forEach((a, idx) => {
-    const cardX = contentX + 64, tabX = contentX + 6, cardW = panelW - 126, textX = cardX + 36, textW = cardW - 72;
-    const qLines = wrap(a.question || '', textW - 92, 16, 'bold');
-    const yourLines = wrap(`Your answer: ${a.yourAnswer || '-'}`, textW, 14);
-    const correctLines = wrap(`Correct answer: ${a.correct || '-'}`, textW, 14);
-    const expLines = a.explanation ? wrap(`Explanation: ${a.explanation}`, textW, 13.5) : [];
-    const cardH = Math.max(154, 82 + qLines.length*20 + yourLines.length*18 + correctLines.length*18 + expLines.length*17);
-    need(cardH + 26);
-    doc.setFillColor(colors.mustard); doc.roundedRect(tabX, y+20, 164, cardH-34, 18, 18, 'F');
-    doc.setTextColor(colors.teal); doc.setFont('helvetica', 'bold'); doc.setFontSize(32); doc.text(`${a.questionNo || idx + 1}.`, tabX+18, y + cardH/2 + 12);
-    doc.setFillColor(colors.white); doc.roundedRect(cardX, y, cardW, cardH, 20, 20, 'F');
-    doc.setDrawColor(colors.line); doc.setLineWidth(0.8); doc.roundedRect(cardX, y, cardW, cardH, 20, 20, 'S');
-    doc.setFillColor(a.isCorrect ? colors.green : colors.red); doc.roundedRect(cardX + cardW - 104, y + 26, 82, 30, 15, 15, 'F');
-    doc.setTextColor(colors.white); doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.text(a.isCorrect ? 'Correct' : 'Revise', cardX + cardW - 90, y + 45);
-    doc.setTextColor(colors.teal); doc.setFont('helvetica', 'bold'); doc.setFontSize(16); doc.text(qLines, textX, y + 38);
-    let rowY = y + 50 + qLines.length * 20;
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(14); doc.setTextColor(colors.body); doc.text(yourLines, textX, rowY);
-    rowY += yourLines.length * 18;
-    doc.setTextColor(colors.green); doc.text(correctLines, textX, rowY);
-    rowY += correctLines.length * 18;
-    if(expLines.length){ doc.setTextColor(colors.body); doc.setFontSize(13.5); doc.text(expLines, textX, rowY); }
-    y += cardH + 26;
-  });
+  for (let idx = 0; idx < answers.length; idx++) {
+    const a = answers[idx];
+    const boxW = panelW - 56;
+    const textW = boxW - 44;
+    const textX = contentX + 22;
+    
+    // Extract Image URLs
+    const qImgMatches = [...(a.question || '').matchAll(/<img[^>]+src="([^">]+)"/gi)];
+    const expImgMatches = [...(a.explanation || '').matchAll(/<img[^>]+src="([^">]+)"/gi)];
+    
+    const qImages = [];
+    for (let m of qImgMatches) { const asset = await imageToAsset(m[1]); if(asset) qImages.push(asset); }
+    
+    const expImages = [];
+    for (let m of expImgMatches) { const asset = await imageToAsset(m[1]); if(asset) expImages.push(asset); }
+
+    const qLines = wrap(a.question || '', textW - 104, 13, 'bold');
+    const yourLines = wrap(`Your answer: ${a.yourAnswer || '-'}`, textW, 11.5);
+    const correctLines = wrap(`Correct answer: ${a.correct || '-'}`, textW, 11.5);
+    const expLines = a.explanation ? wrap(`Explanation: ${a.explanation}`, textW, 11.2) : [];
+    
+    const maxImgH = 160;
+    const qImgSpace = qImages.length * (maxImgH + 12);
+    const expImgSpace = expImages.length * (maxImgH + 12);
+
+    const boxH = 82 + (qLines.length * 16) + qImgSpace + (yourLines.length * 15) + (correctLines.length * 15) + (expLines.length * 14) + expImgSpace;
+    
+    need(boxH + 16);
+    
+    doc.setFillColor('#FFFFFF');
+    doc.roundedRect(contentX, y, boxW, boxH, 12, 12, 'F');
+    doc.setFillColor(a.isCorrect ? colors.green : colors.red);
+    doc.roundedRect(contentX, y, 6, boxH, 3, 3, 'F');
+    doc.setDrawColor(a.isCorrect ? '#25D366' : '#FF3D8A');
+    doc.setLineWidth(0.8);
+    doc.roundedRect(contentX, y, boxW, boxH, 12, 12, 'S');
+    drawBadge(a.isCorrect ? 'CORRECT' : 'REVISE', contentX + boxW - 104, y + 18, a.isCorrect ? colors.paleGreen : colors.paleRed, a.isCorrect ? colors.green : colors.red);
+    
+    doc.setTextColor(colors.blue);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.text(`Question ${a.questionNo || idx + 1}`, textX, y + 34);
+    
+    doc.setTextColor(colors.ink);
+    doc.setFontSize(13);
+    doc.text(qLines, textX, y + 58);
+    
+    let rowY = y + 66 + qLines.length * 16;
+    
+    // Draw Question Images
+    for(let asset of qImages) {
+      drawImageContain(asset, textX + textW/2, rowY + maxImgH/2, textW, maxImgH);
+      rowY += maxImgH + 12;
+    }
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11.5);
+    doc.setTextColor(colors.muted);
+    doc.text(yourLines, textX, rowY);
+    rowY += yourLines.length * 15;
+    
+    doc.setTextColor(colors.green);
+    doc.text(correctLines, textX, rowY);
+    rowY += correctLines.length * 15;
+    
+    if (expLines.length) {
+      doc.setTextColor(colors.muted);
+      doc.text(expLines, textX, rowY);
+      rowY += expLines.length * 14;
+    }
+    
+    // Draw Explanation Images
+    for(let asset of expImages) {
+      drawImageContain(asset, textX + textW/2, rowY + maxImgH/2, textW, maxImgH);
+      rowY += maxImgH + 12;
+    }
+
+    y += boxH + 16;
+  }
 
   drawFootersAndWatermark();
   doc.save(fileName || 'TTC_Quiz_Report.pdf');
@@ -1790,7 +1881,7 @@ async function imageToAsset(url){
       img.onerror = () => resolve({ width: 1, height: 1 });
       img.src = data;
     });
-    return { data, width: size.width, height: size.height, type: blob.type && blob.type.includes('jpeg') ? 'JPEG' : 'PNG' };
+    return { data, width: size.width, height: size.height, type: blob.type && blob.type.includes('png') ? 'PNG' : 'JPEG' };
   } catch(e) {
     return null;
   }
@@ -2031,8 +2122,8 @@ Explanation:
                 let url = data.secure_url;
                 const uploadStr = '/upload/';
                 if (url.includes(uploadStr)) {
-                    // Inject compression directly into the URL returned by Cloudinary
-                    url = url.replace(uploadStr, uploadStr + 'c_limit,w_800,q_auto/');
+                    // Inject compression and format directly into the URL returned by Cloudinary
+                    url = url.replace(uploadStr, uploadStr + 'c_limit,w_800,q_auto,f_jpg/');
                 }
                 pendingImages[index].url = url;
                 renderImageSlots();
@@ -2171,6 +2262,7 @@ Explanation:
             
         const fileName = `${safeName}.html`;
         
+        // EXPLICIT UTF-8 ENCODING: Fixes Font parsing errors on mobile Android browsers
         const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         
