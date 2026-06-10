@@ -491,7 +491,6 @@ description: "Comprehensive MCQ Quiz practice for {{GEN_CHAPTER}}."
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Righteous&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <!-- Lottie Player for Vibe Check & Detonation -->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
@@ -644,8 +643,6 @@ canvas#particles { position: absolute; inset: 0; z-index: 60; pointer-events: no
 .s4.active .uitem:nth-child(1) { animation: adSlideUp 0.25s ease 0.6s forwards; }
 .s4.active .uitem:nth-child(2) { animation: adSlideUp 0.25s ease 0.75s forwards; }
 .s4.active .uitem:nth-child(3) { animation: adSlideUp 0.25s ease 0.9s forwards; }
-.s4.active .uitem:nth-child(4) { animation: adSlideUp 0.25s ease 1.05s forwards; }
-.s4.active .uitem:nth-child(5) { animation: adSlideUp 0.25s ease 1.2s forwards; }
  
 .s5 { background: var(--cream); overflow: hidden; }
 .s5 .top-wave { position: absolute; top: 0; left: 0; right: 0; height: 200px; background: var(--yellow); clip-path: ellipse(55% 60% at 50% 0%); }
@@ -915,110 +912,6 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
     box-shadow: none !important;
     background: transparent !important;
 }
-
-/* ═══════════════════════════════════
-   CHALLENGE A FRIEND STYLES
-═══════════════════════════════════ */
-
-/* ── Challenge Button ── */
-.btn-challenge { background: linear-gradient(135deg, #7C3AED, #4361EE, #FF3D8A); background-size: 300% 300%; animation: challengeGradient 3s ease infinite; color: white; border: 2.5px solid var(--dark); position: relative; overflow: hidden; }
-@keyframes challengeGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-.btn-challenge::before { content: ''; position: absolute; top: -2px; left: -100%; width: 60%; height: calc(100% + 4px); background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); animation: challengeShimmer 2s linear infinite; border-radius: 14px; }
-@keyframes challengeShimmer { from { left: -60%; } to { left: 160%; } }
-.btn-challenge:hover { transform: translate(-3px,-3px) scale(1.02); box-shadow: 6px 6px 0 var(--dark), 0 0 24px rgba(124,58,237,0.5); }
-.btn-challenge:active { transform: translate(2px,2px); }
-
-/* Floating particles on the challenge button */
-.challenge-btn-wrap { position: relative; width: 100%; margin-top: 10px; margin-bottom: 10px; }
-.challenge-btn-wrap .c-particle { position: absolute; width: 7px; height: 7px; border-radius: 50%; pointer-events: none; animation: cParticleFloat 2.5s ease-in-out infinite; opacity: 0; }
-.challenge-btn-wrap .c-particle:nth-child(1){ background:#C8FF00; top:-10px; left:15%; animation-delay:0s; }
-.challenge-btn-wrap .c-particle:nth-child(2){ background:#FF3D8A; top:-14px; left:40%; animation-delay:0.4s; width:9px;height:9px; }
-.challenge-btn-wrap .c-particle:nth-child(3){ background:#4CC9F0; top:-8px;  left:65%; animation-delay:0.8s; }
-.challenge-btn-wrap .c-particle:nth-child(4){ background:#FFD93D; top:-12px; left:82%; animation-delay:1.2s; width:6px;height:6px; }
-.challenge-btn-wrap .c-particle:nth-child(5){ background:#A78BFA; top:-10px; left:5%;  animation-delay:1.6s; }
-@keyframes cParticleFloat { 0% { opacity:0; transform: translateY(0) scale(0.5); } 30% { opacity:1; transform: translateY(-14px) scale(1); } 70% { opacity:1; transform: translateY(-22px) scale(0.9); } 100% { opacity:0; transform: translateY(-30px) scale(0.5); } }
-
-/* ── Challenge Button: Lottie + VS watermark ── */
-.challenge-btn-inner { display:flex; align-items:center; justify-content:center; gap:8px; position:relative; z-index:1; }
-.challenge-btn-lottie { width: 28px; height: 28px; flex-shrink: 0; display: block; pointer-events: none; }
-.btn-challenge::after { content: 'VS VS VS VS VS VS VS VS VS VS VS VS VS'; position: absolute; inset: 0; font-family: 'Fredoka One', cursive; font-size: 44px; letter-spacing: 10px; color: rgba(255,255,255,0.055); display: flex; align-items: center; overflow: hidden; white-space: nowrap; pointer-events: none; transform: rotate(-6deg) scale(1.15); padding-left: 8px; }
-
-/* ── Card Challenge-Mode: Full card LIGHT takeover ── */
-.card.challenge-mode { background: linear-gradient(160deg, #FFFFFF 0%, #F5F4FF 100%) !important; border-color: #7C3AED !important; box-shadow: 8px 8px 0 #7C3AED !important; }
-.card.challenge-mode::before { background: linear-gradient(90deg, #7C3AED, #FF3D8A, #4361EE, #C8FF00) !important; }
-.card.challenge-mode .logo { border-color: #7C3AED; box-shadow: 3px 3px 0 #7C3AED; }
-.card.challenge-mode #nameChip { background: #7C3AED; color: #fff; border-color: var(--dark); box-shadow: 2px 2px 0 var(--dark); }
-.card.challenge-mode #nameH2 { color: var(--dark); }
-.card.challenge-mode #nameSub { color: var(--grey); }
-.card.challenge-mode .input-field { background: #fff; color: var(--dark); border-color: #7C3AED; box-shadow: 3px 3px 0 rgba(124,58,237,0.5); }
-.card.challenge-mode .input-field::placeholder { color: rgba(17,17,24,0.4); }
-.card.challenge-mode .input-field:focus { border-color: #FF3D8A; box-shadow: 3px 3px 0 #FF3D8A; }
-
-/* ── Challenge Incoming Banner: VS Card Layout ── */
-.challenge-incoming-banner { display: none; width: 100%; margin-bottom: 20px; }
-.challenge-incoming-banner.show { display: block; animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1); }
-.cib-top-bar { display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-.cib-badge { background: linear-gradient(135deg, #FF3D8A, #7C3AED); color: #fff; font-family: 'Fredoka One', cursive; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 5px 18px; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.2); }
-.cib-vs-row { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px; }
-.cib-player-card { flex: 1; border-radius: 16px; padding: 12px 8px; text-align: center; border: 2.5px solid var(--dark); box-shadow: 3px 3px 0 var(--dark); }
-.cib-challenger-card { background: #FFF5E0; }
-.cib-you-card { background: #E8F8FF; }
-.cib-player-label { font-size: 9px; letter-spacing: 2px; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 4px; color: var(--grey); }
-.cib-player-name { font-family: 'Fredoka One', cursive; font-size: 17px; color: var(--dark); display: block; margin-bottom: 4px; word-break: break-word; line-height: 1.15; }
-.cib-player-score { font-family: 'Fredoka One', cursive; font-size: 30px; color: var(--blue); line-height: 1; display: block; }
-.cib-player-score-sub { font-size: 9px; letter-spacing: 1px; color: var(--grey); text-transform: uppercase; display: block; margin-top: 3px; }
-.cib-you-question { font-family: 'Fredoka One', cursive; font-size: 17px; color: var(--dark); display: block; margin-bottom: 4px; }
-.cib-you-beat-it { font-family: 'Righteous', cursive; font-size: 13px; color: var(--grey); letter-spacing: 1px; display: block; }
-.cib-vs-pill { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; background: var(--white); border: 2.5px solid var(--dark); box-shadow: 2px 2px 0 var(--dark); display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 12px; color: var(--dark); }
-.cib-footer { background: var(--white); border-radius: 10px; border: 2px solid var(--dark); padding: 8px 12px; font-size: 12px; font-weight: 700; color: var(--dark); text-align: center; letter-spacing: 0.3px; }
-
-/* ── VS Banner on Result Screen ── */
-.vs-banner { display: none; border-radius: 18px; border: 2.5px solid var(--dark); box-shadow: 5px 5px 0 var(--dark); margin: 12px 0 16px; overflow: hidden; animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1); }
-.vs-banner.show { display: block; }
-.vs-banner-win  { background: linear-gradient(135deg, #E8FFF8, #06D6A0); }
-.vs-banner-lose { background: linear-gradient(135deg, #FFE8E0, #FF6B35); }
-.vs-banner-tie  { background: linear-gradient(135deg, #FFFBE6, #FFD93D); }
-.vs-inner { display:flex; align-items:stretch; }
-.vs-player-col { flex:1; padding: 14px 10px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
-.vs-player-col .vsp-label { font-size:10px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color: var(--dark); opacity: 0.7; }
-.vs-player-col .vsp-name  { font-family:'Fredoka One',cursive; font-size:15px; color: var(--dark); word-break:break-word; }
-.vs-player-col .vsp-score { font-family:'Fredoka One',cursive; font-size:36px; color: var(--dark); line-height:1; }
-.vs-player-col .vsp-score.loser { opacity: 0.5; font-size:28px; }
-.vs-middle { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 8px; }
-.vs-badge { font-family:'Fredoka One',cursive; font-size:18px; color: var(--white); background: var(--dark); border-radius:8px; padding:4px 10px; }
-.vs-result-label { width:100%; padding:10px 14px; font-family:'Righteous',cursive; font-size:14px; font-weight:800; letter-spacing:0.5px; color: var(--dark); text-align:center; background: rgba(255,255,255,0.4); border-top: 2px solid var(--dark); }
-
-/* ── Crown Lottie Overlay ── */
-#crownOverlay { position: fixed; inset:0; z-index: 10000; display:none; align-items:center; justify-content:center; flex-direction:column; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); animation: fadeIn 0.3s ease; }
-#crownOverlay.show { display:flex; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.crown-lottie-wrap { width:220px; height:220px; margin-bottom:8px; position: relative; }
-.crown-lottie-wrap lottie-player.sparkle { position: absolute; inset: -40px; width: 100%; height: 100%; pointer-events: none; }
-.crown-headline { font-family:'Fredoka One',cursive; font-size:36px; color:#FFD93D; text-align:center; text-shadow: 0 4px 0 rgba(0,0,0,0.4); animation: crownPop 0.5s cubic-bezier(.34,1.56,.64,1) 0.3s both; }
-.crown-sub { font-size:16px; font-weight:800; color:rgba(255,255,255,0.8); text-align:center; margin-top:4px; animation: crownPop 0.5s cubic-bezier(.34,1.56,.64,1) 0.5s both; }
-@keyframes crownPop { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
-.crown-dismiss { margin-top:24px; background: #FFD93D; color: var(--dark); font-family:'Fredoka One',cursive; font-size:17px; letter-spacing:1px; padding:12px 36px; border-radius:14px; border:2.5px solid var(--dark); box-shadow:4px 4px 0 var(--dark); cursor:pointer; animation: crownPop 0.5s cubic-bezier(.34,1.56,.64,1) 0.7s both; transition: transform 0.1s, box-shadow 0.1s; }
-.crown-dismiss:hover  { transform: translate(-2px,-2px); box-shadow:6px 6px 0 var(--dark); }
-.crown-dismiss:active { transform: translate(2px,2px);  box-shadow:2px 2px 0 var(--dark); }
-
-/* ── Result Canvas Styling (Hidden) ── */
-#resultCanvasTemplate { position: fixed; left: -9999px; top: 0; width: 400px; padding: 30px; background: #FFF8F3; display: flex; flex-direction: column; align-items: center; border-radius: 20px; font-family: 'DM Sans', sans-serif; }
-#resultCanvasTemplate::before { content: ''; position: absolute; inset: 0; opacity: 0.1; background-image: repeating-linear-gradient(-45deg, transparent, transparent 18px, var(--rust) 18px, var(--rust) 19px); z-index: 0; pointer-events: none; }
-.rc-content { position: relative; z-index: 1; width: 100%; text-align: center; }
-.rc-logo { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--rust); box-shadow: 4px 4px 0 var(--rust); margin-bottom: 12px; }
-.rc-title { font-family: 'Fredoka One', cursive; font-size: 32px; color: var(--dark); line-height: 1.1; margin-bottom: 6px; }
-.rc-subtitle { font-family: 'Righteous', cursive; font-size: 38px; color: var(--rust); margin-bottom: 24px; }
-.rc-card { background: #FFFFFF; border: 2.5px solid var(--dark); border-radius: 16px; padding: 16px; box-shadow: 4px 4px 0 var(--dark); width: 100%; box-sizing: border-box; margin-bottom: 16px; text-align: left; }
-.rc-row { display: flex; justify-content: flex-start; margin-bottom: 10px; align-items: center; }
-.rc-row:last-child { margin-bottom: 0; }
-.rc-label { font-size: 14px; font-weight: 800; color: var(--grey); text-transform: uppercase; width: 80px; flex-shrink: 0; }
-.rc-value { font-size: 16px; font-weight: 700; color: var(--dark); }
-.rc-score-box { background: #FFFFFF; border: 2.5px solid var(--dark); border-radius: 16px; padding: 12px; box-shadow: 4px 4px 0 var(--dark); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 12px; }
-.rc-score-label { font-size: 16px; font-weight: 800; color: var(--dark); }
-.rc-score-val { font-family: 'Fredoka One', cursive; font-size: 36px; color: var(--rust); }
-.rc-score-val span { color: var(--dark); font-size: 28px; }
-.rc-footer { font-family: 'Righteous', cursive; font-size: 18px; color: var(--dark); margin-bottom: 20px; }
-.rc-bottom { background: var(--rust); color: white; width: 100%; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 6px; }
 </style>
 </head>
 <body>
@@ -1059,7 +952,7 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
     <div class="scene s1" id="s1"><div class="cd-ring"><div class="cd-ring-inner"><div class="cd-num" id="cdNum">3</div></div></div><div class="cd-label">GET READY!</div></div>
     <div class="scene s2" id="s2"><div class="burst-bg"></div><div class="logo-ring"><img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" alt="TTC"></div><div class="big-ttc">TTC</div><div class="big-quiz">QUIZ</div><div class="v2-tag">✅ VERSION 2.0 — UPDATED</div></div>
     <div class="scene s3" id="s3"><div class="feat-title">✨ What's Inside?</div><div class="feat-list"><div class="fcard c1"><div class="ficon">📖</div><div class="finfo"><div class="flabel">Subject</div><div class="fval">{{GEN_SUBJECT}}</div></div></div><div class="fcard c2"><div class="ficon">🎯</div><div class="finfo"><div class="flabel">Challenge</div><div class="fval">{{GEN_QCOUNT}} Questions</div></div><div class="fbadge new">NEW</div></div><div class="fcard c3"><div class="ficon">💡</div><div class="finfo"><div class="flabel">Mode</div><div class="fval">Instant Explanations</div></div><div class="fbadge v2">V2</div></div><div class="fcard c4"><div class="ficon">📤</div><div class="finfo"><div class="flabel">Share</div><div class="fval">WhatsApp Your Score!</div></div></div></div></div>
-    <div class="scene s4" id="s4"><div class="confetti-bg"></div><div class="zigzag"></div><div class="zigzag-bot"></div><div class="update-badge">🚀 BIG UPDATE</div><div class="update-headline">BIGGER<br>&amp; BETTER!</div><div class="update-items"><div class="uitem"><div class="uicon">⚡</div><div class="utxt">Faster &amp; smoother than ever</div></div><div class="uitem"><div class="uicon">🏆</div><div class="utxt">Scored + full explanations</div></div><div class="uitem"><div class="uicon">💬</div><div class="utxt">Share results on WhatsApp</div></div><div class="uitem"><div class="uicon">⚔️</div><div class="utxt">Challenge a Friend</div></div><div class="uitem"><div class="uicon">📄</div><div class="utxt">Download PDF Report</div></div></div></div>
+    <div class="scene s4" id="s4"><div class="confetti-bg"></div><div class="zigzag"></div><div class="zigzag-bot"></div><div class="update-badge">🚀 BIG UPDATE</div><div class="update-headline">BIGGER<br>&amp; BETTER!</div><div class="update-items"><div class="uitem"><div class="uicon">⚡</div><div class="utxt">Faster &amp; smoother than ever</div></div><div class="uitem"><div class="uicon">🏆</div><div class="utxt">Scored + full explanations</div></div><div class="uitem"><div class="uicon">💬</div><div class="utxt">Share results on WhatsApp</div></div></div></div>
     <div class="scene s5" id="s5"><div class="top-wave"></div><div class="stars-row"><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span></div><div class="cta-logo-wrap"><img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" alt="TTC"></div><div class="cta-main-title">TTC <span>QUIZ</span></div><div class="cta-subtitle">is here! 🎉</div><div class="tag-row"><div class="tag t1">Free</div><div class="tag t2">Instant</div><div class="tag t3">Fun!</div></div><button class="play-btn" onclick="launchQuiz()">▶ Play Now!</button><div class="cta-tagline">Tushar Tuition Classes · Wardha</div></div>
     <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
     <button class="replay-btn" id="replayBtn" onclick="startAd()">↺ Replay</button>
@@ -1092,28 +985,6 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
   </div>
   <div id="quizScreen" class="screen">
     <!-- Updated Card with Gamification ID -->
-    <!-- Challenge Incoming Banner: VS Card Layout (shown only when ?c= param present) -->
-    <div class="challenge-incoming-banner" id="challengeIncomingBanner">
-      <div class="cib-top-bar">
-        <span class="cib-badge">Challenge Incoming</span>
-      </div>
-      <div class="cib-vs-row">
-        <div class="cib-player-card cib-challenger-card">
-          <span class="cib-player-label">Challenger</span>
-          <span class="cib-player-name" id="cibChallengerName">Player</span>
-          <span class="cib-player-score" id="cibChallengerScore">?</span>
-          <span class="cib-player-score-sub">Score</span>
-        </div>
-        <div class="cib-vs-pill">VS</div>
-        <div class="cib-player-card cib-you-card">
-          <span class="cib-player-label">You</span>
-          <span class="cib-you-question">Ready?</span>
-          <span class="cib-you-beat-it">Beat 'em!</span>
-        </div>
-      </div>
-      <div class="cib-footer" id="cibFooter">Enter your name below to accept the challenge</div>
-    </div>
-
     <div class="card quiz-card" id="quizCard">
         
         <!-- Gamification Overlays -->
@@ -1220,37 +1091,6 @@ p.sub { font-size: 14px; color: var(--grey); font-weight: 500; margin-bottom: 20
         </div>
         
         <span class="feedback-info-text vibe-label" id="quizFeedbackText">It was okay</span>
-      </div>
-
-      <!-- VS Banner on Result Screen -->
-      <div class="vs-banner" id="vsResultBanner">
-        <div class="vs-inner">
-          <div class="vs-player-col" id="vspYouCol">
-            <span class="vsp-label">You</span>
-            <span class="vsp-name" id="vspYouName">Player</span>
-            <span class="vsp-score" id="vspYouScore">?</span>
-          </div>
-          <div class="vs-middle">
-            <span class="vs-badge" id="vspBadge">VS</span>
-          </div>
-          <div class="vs-player-col" id="vspChallengerCol">
-            <span class="vsp-label">Challenger</span>
-            <span class="vsp-name" id="vspChallengerName">Friend</span>
-            <span class="vsp-score" id="vspChallengerScore">?</span>
-          </div>
-        </div>
-        <div class="vs-result-label" id="vsResultLabel">Wait for it...</div>
-      </div>
-
-      <!-- Challenge a Friend Button -->
-      <div class="challenge-btn-wrap" id="challengeBtnWrap">
-        <div class="c-particle"></div><div class="c-particle"></div><div class="c-particle"></div><div class="c-particle"></div><div class="c-particle"></div>
-        <button class="btn btn-challenge" onclick="shareChallenge()">
-          <div class="challenge-btn-inner">
-            <lottie-player class="challenge-btn-lottie" src="https://lottie.host/791cce2a-e2c7-43f1-b956-65de4ad9cecc/P9532p5V9G.json" background="transparent" speed="1" loop autoplay></lottie-player>
-            Challenge a Friend!
-          </div>
-        </button>
       </div>
 
       <button class="btn btn-green" onclick="shareWhatsApp()">📤 Share on WhatsApp</button>
@@ -1642,36 +1482,14 @@ function showResult(){
   const total=questions.length, pct=Math.round((score/total)*100);
   document.getElementById("scoreNum").innerText=score; document.getElementById("scoreDenom").innerText=`/${total}`; document.getElementById("scorePct").innerText=pct+"%";
   let emoji,title,msg,chipText,pctBg;
-  if(pct>=90){ emoji="";title="Absolutely Smashed It!";pctBg="#EAFFDA";msg="Perfect! Outstanding performance, "+username+". Top of the class!";chipText="Outstanding"; document.getElementById('crownOverlay').classList.add('show'); }
-  else if(pct>=75){ emoji="";title="Really Well Done!";pctBg="#E0F0FF";msg="Strong performance, "+username+"! A little more practice and you'll be perfect.";chipText="Well Done"; }
-  else if(pct>=50){ emoji="";title="Good Effort!";pctBg="#FFF8DC";msg="You're on the right track, "+username+". Keep revising and you'll ace it!";chipText="Keep Going"; }
-  else { emoji="";title="Time to Revise!";pctBg="#FFEAEA";msg="Don't worry, "+username+" — go through the chapters once more and try again!";chipText="Try Again"; }
+  if(pct>=90){ emoji="🔥";title="Absolutely Smashed It!";pctBg="#EAFFDA";msg="Perfect! Outstanding performance, "+username+". Top of the class!";chipText="✦ Outstanding"; }
+  else if(pct>=75){ emoji="💪";title="Really Well Done!";pctBg="#E0F0FF";msg="Strong performance, "+username+"! A little more practice and you'll be perfect.";chipText="✦ Well Done"; }
+  else if(pct>=50){ emoji="📚";title="Good Effort!";pctBg="#FFF8DC";msg="You're on the right track, "+username+". Keep revising and you'll ace it!";chipText="✦ Keep Going"; }
+  else { emoji="🧐";title="Time to Revise!";pctBg="#FFEAEA";msg="Don't worry, "+username+" — go through the chapters once more and try again!";chipText="✦ Try Again"; }
   document.getElementById("fbEmoji").innerText=emoji; document.getElementById("fbTitle").innerText=title; document.getElementById("fbMsg").innerText=msg;
   document.getElementById("resultChip").innerText=chipText; document.getElementById("scorePct").style.background=pctBg;
   confetti({particleCount:180,spread:110,origin:{y:0.45},colors:["#4361EE","#C8FF00","#FF3D8A","#FF6B35","#ffffff"]});
   sendToSheet(total, pct);
-  
-  if (challengeMode) {
-    const vBanner = document.getElementById('vsResultBanner');
-    vBanner.classList.add('show');
-    document.getElementById('vspYouName').innerText = username;
-    document.getElementById('vspYouScore').innerText = score;
-    document.getElementById('vspChallengerName').innerText = challengerName;
-    document.getElementById('vspChallengerScore').innerText = challengerScore;
-    const vLbl = document.getElementById('vsResultLabel');
-    if (score > challengerScore) {
-      vBanner.className = 'vs-banner show vs-banner-win';
-      vLbl.innerText = "YOU WON! 🔥";
-      document.getElementById('vspChallengerScore').classList.add('loser');
-    } else if (score < challengerScore) {
-      vBanner.className = 'vs-banner show vs-banner-lose';
-      vLbl.innerText = "CHALLENGER WON! 😢";
-      document.getElementById('vspYouScore').classList.add('loser');
-    } else {
-      vBanner.className = 'vs-banner show vs-banner-tie';
-      vLbl.innerText = "IT'S A TIE! 🤝";
-    }
-  }
 }
  
 function sendToSheet(total, pct){
@@ -2070,158 +1888,13 @@ async function imageToAsset(url){
   }
 }
  
-// ═══════════════════════════════════
-//   CHALLENGE ENGINE
-// ═══════════════════════════════════
-let challengeMode = false;
-let challengerName = "";
-let challengerScore = 0;
-
-// URL Parsing
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has('c')) {
-  challengeMode = true;
-  const cData = decodeURIComponent(urlParams.get('c')).split('|');
-  challengerName = cData[0] || "Friend";
-  challengerScore = parseInt(cData[1]) || 0;
-  
-  // Setup UI
-  document.getElementById('quizCard').classList.add('challenge-mode');
-  const cib = document.getElementById('challengeIncomingBanner');
-  if (cib) {
-    cib.classList.add('show');
-    document.getElementById('cibChallengerName').innerText = challengerName;
-    document.getElementById('cibChallengerScore').innerText = challengerScore;
-  }
-}
-
-function shareChallenge() {
-  const encName = encodeURIComponent(username);
-  const encScore = encodeURIComponent(score);
-  const challengeUrl = window.location.origin + window.location.pathname + "?c=" + encName + "|" + encScore;
-  
-  const shareText = `🔥 I challenge you! I scored ${score}/${questions.length} in the ${chapterName} quiz.\n\nCan you beat me?\nAccept challenge: ${challengeUrl}`;
-  
-  if (navigator.share) {
-    navigator.share({ title: 'TTC Quiz Challenge', text: shareText, url: challengeUrl }).catch(err => console.log('Share fail:', err));
-  } else {
-    fallbackCopyChallenge(challengeUrl);
-  }
-}
-
-function fallbackCopyChallenge(url) {
-  const t = document.createElement("textarea");
-  t.value = `🔥 I challenge you! I scored ${score}/${questions.length} in the ${chapterName} quiz.\n\nCan you beat me?\nAccept challenge: ${url}`;
-  document.body.appendChild(t);
-  t.select();
-  document.execCommand("copy");
-  document.body.removeChild(t);
-  alert("Challenge link copied to clipboard! Share it with your friends.");
-}
-
-// ═══════════════════════════════════
-//   HTML2CANVAS WHATSAPP SHARE
-// ═══════════════════════════════════
-async function shareWhatsApp() {
-  const btn = document.querySelector('button[onclick="shareWhatsApp()"]');
-  const origText = btn.innerHTML;
-  btn.innerHTML = "⏳ Generating Image...";
-  btn.style.pointerEvents = 'none';
-
-  try {
-    // Fill the hidden template with real data
-    document.getElementById('rcStudent').innerText = username;
-    document.getElementById('rcSubject').innerText = subjectName;
-    document.getElementById('rcChapter').innerText = chapterName;
-    document.getElementById('rcScore').innerText = score;
-    document.getElementById('rcTotal').innerText = questions.length;
-    
-    let remark = "Good Effort!";
-    const pct = score / questions.length;
-    if (pct === 1) remark = "Perfect Score!";
-    else if (pct >= 0.8) remark = "Outstanding!";
-    else if (pct >= 0.6) remark = "Well Done!";
-    document.getElementById('rcRemark').innerText = remark;
-
-    const tpl = document.getElementById('resultCanvasTemplate');
-    tpl.style.left = '0'; // Bring into view slightly to render
-    tpl.style.zIndex = '-1000'; // Keep behind everything
-    
-    // Generate Canvas
-    const canvas = await html2canvas(tpl, { backgroundColor: '#FFF8F3', scale: 2, useCORS: true });
-    
-    // Hide again
-    tpl.style.left = '-9999px';
-    
-    const imgDataUrl = canvas.toDataURL("image/jpeg", 0.9);
-    const blob = await (await fetch(imgDataUrl)).blob();
-    const file = new File([blob], "ttc-result.jpg", { type: "image/jpeg" });
-    
-    const msg = `🎓 *TTC Quiz Result*\n\n👤 *Student:* ${username}\n📘 *Subject:* ${subjectName}\n📖 *Chapter:* ${chapterName}\n🏆 *Score:* ${score}/${questions.length}\n\n_Tushar Tuition Classes, Wardha_ 📚`;
-
-    // Try Web Share API with Files
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        files: [file],
-        title: 'TTC Quiz Result',
-        text: msg
-      });
-    } else {
-      // Fallback: Just open whatsapp with text if image share not supported (like Desktop Web)
-      window.open("https://wa.me/?text=" + encodeURIComponent(msg));
-    }
-  } catch (err) {
-    console.error("Error sharing:", err);
-    // Ultimate fallback
-    const fallbackMsg = `🎓 *TTC Quiz Result*\n\n👤 *Student:* ${username}\n📘 *Subject:* ${subjectName}\n📖 *Chapter:* ${chapterName}\n🏆 *Score:* ${score}/${questions.length}\n\n_Tushar Tuition Classes, Wardha_ 📚`;
-    window.open("https://wa.me/?text=" + encodeURIComponent(fallbackMsg));
-  } finally {
-    btn.innerHTML = origText;
-    btn.style.pointerEvents = 'auto';
-  }
-}
-
+function shareWhatsApp(){ const msg=`🎓 *TTC Quiz Result*\n\n👤 *Student:* ${username}\n📘 *Subject:* ${subjectName}\n📖 *Chapter:* ${chapterName}\n🏆 *Score:* ${score}/${questions.length}\n\n_Tushar Tuition Classes, Wardha_ 📚`; window.open("https://wa.me/?text="+encodeURIComponent(msg)); }
 function restartQuiz(){ location.reload(); }
 document.getElementById("ratingBtn").addEventListener("click",function(){
   for(let i=0;i<16;i++){ const s=document.createElement("span"); s.className="sburst"; s.innerText=["★","✦","●","▲"][Math.floor(Math.random()*4)]; s.style.color=["#C8FF00","#FF6B35","#4361EE","#FF3D8A"][Math.floor(Math.random()*4)]; s.style.setProperty("--bx",(Math.random()*160-80)+"px"); s.style.setProperty("--by",(Math.random()*-150)+"px"); s.style.left=(35+Math.random()*30)+"%"; s.style.top="50%"; this.appendChild(s); setTimeout(()=>s.remove(),750); }
   setTimeout(()=>window.open("https://g.page/r/CdUkswJ0ZulAEBE/review"),320);
 });
 </script>
-
-<!-- Crown Overlay Lottie -->
-<div id="crownOverlay">
-  <div class="crown-lottie-wrap">
-    <lottie-player class="sparkle" src="https://lottie.host/95d0efc1-7fbd-482a-a9a3-5c7426c116de/jFIfN7kR7W.json" background="transparent" speed="1" loop autoplay></lottie-player>
-    <lottie-player src="https://lottie.host/81a8f9d0-c3d3-4e4b-97e3-0d34de5ab2eb/pZtyfE0g2L.json" background="transparent" speed="1" autoplay></lottie-player>
-  </div>
-  <div class="crown-headline">FLAWLESS VICTORY!</div>
-  <div class="crown-sub">You destroyed that quiz.</div>
-  <button class="crown-dismiss" onclick="document.getElementById('crownOverlay').classList.remove('show')">Awesome!</button>
-</div>
-
-<!-- Hidden Canvas Template for Image Generation -->
-<div id="resultCanvasTemplate">
-  <div class="rc-content">
-    <img src="https://i.postimg.cc/x9mDND2Q/Ttc-logo.png" class="rc-logo" crossorigin="anonymous">
-    <div class="rc-title">TTC Quiz Result</div>
-    <div class="rc-subtitle" id="rcRemark">Great Job!</div>
-    
-    <div class="rc-card">
-      <div class="rc-row"><span class="rc-label">Student</span><span class="rc-value" id="rcStudent">Name</span></div>
-      <div class="rc-row"><span class="rc-label">Subject</span><span class="rc-value" id="rcSubject">Subject</span></div>
-      <div class="rc-row"><span class="rc-label">Chapter</span><span class="rc-value" id="rcChapter">Chapter</span></div>
-    </div>
-    
-    <div class="rc-score-box">
-      <span class="rc-score-label">Final Score:</span>
-      <span class="rc-score-val"><span id="rcScore">0</span><span>/</span><span id="rcTotal">0</span></span>
-    </div>
-    
-    <div class="rc-footer">Tushar Tuition Classes • Wardha</div>
-    <div class="rc-bottom">💡 Instant Results • Full Explanations • Gamified Learning</div>
-  </div>
-</div>
-
 </body>
 </html></textarea>
 
