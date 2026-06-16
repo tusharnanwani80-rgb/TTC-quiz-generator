@@ -2122,6 +2122,12 @@ function sendToSheet(total, pct){
     device: navigator.userAgent
   };
   
+  if (challengeData) {
+    payload.challengerName = challengeData.n;
+    payload.challengerScore = challengeData.s;
+    payload.didPlayerWin = score > challengeData.s;
+  }
+  
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
