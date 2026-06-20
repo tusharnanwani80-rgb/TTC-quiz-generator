@@ -2292,13 +2292,85 @@ async function createTtcQuizPdf(report, fileName){
   const assets = await loadPdfAssets();
   const margin = 30;
   const panelW = pageW - margin*2;
-  const bottomLimit = pageH - 82;
+  const bottomLimit = pageH - 40;
   let y = 0;
+
+  // -- NATIVE UNICODE CANVAS OVERRIDE --
+  let currentTextColor = '#243447';
+  const origSetTextColor = doc.setTextColor.bind(doc);
+  doc.setTextColor = function() {
+    if(arguments.length===1 && typeof arguments[0]==='string') currentTextColor = arguments[0];
+    return origSetTextColor.apply(this, arguments);
+  };
+  let currentFontWeight = 'normal';
+  const origSetFont = doc.setFont.bind(doc);
+  doc.setFont = function(fontName, fontStyle) {
+    if(fontStyle) currentFontWeight = fontStyle;
+    else if(fontName !== 'helvetica') currentFontWeight = fontName;
+    else currentFontWeight = 'normal';
+    return origSetFont.apply(this, arguments);
+  };
+  doc.getStringUnitWidth = function(text) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const fs = doc.internal.getFontSize();
+    ctx.font = `${currentFontWeight} ${fs}pt sans-serif`;
+    return (ctx.measureText(text).width * 0.75) / fs;
+  };
+  const origText = doc.text.bind(doc);
+  doc.text = function(text, x, yPos, options) {
+    if (!text) return doc;
+    const textArr = Array.isArray(text) ? text : [text];
+    if (textArr.length === 0 || !textArr[0]) return doc;
+    
+    const fs = doc.internal.getFontSize();
+    const pt2px = 1.3333;
+    const pxFs = fs * pt2px;
+    const pxLh = fs * 1.15 * pt2px;
+    
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const scale = 3; 
+    
+    ctx.font = `${currentFontWeight} ${pxFs}px sans-serif`;
+    let maxW = 0;
+    for(let t of textArr) {
+      const w = ctx.measureText(t).width;
+      if(w > maxW) maxW = w;
+    }
+    if (maxW === 0) return doc;
+    
+    const padX = 4 * pt2px;
+    const padY = 4 * pt2px;
+    
+    canvas.width = (maxW + padX * 2) * scale;
+    canvas.height = ((textArr.length - 1) * pxLh + pxFs * 1.4 + padY * 2) * scale;
+    
+    ctx.scale(scale, scale);
+    ctx.font = `${currentFontWeight} ${pxFs}px sans-serif`;
+    ctx.fillStyle = currentTextColor;
+    ctx.textBaseline = 'top';
+    
+    for(let i=0; i<textArr.length; i++) {
+      ctx.fillText(textArr[i], padX, padY + i * pxLh);
+    }
+    
+    const ptW = (canvas.width / scale) * 0.75;
+    const ptH = (canvas.height / scale) * 0.75;
+    
+    const imgY = yPos - fs - (padY * 0.75);
+    const imgX = x - (padX * 0.75);
+    
+    try {
+      doc.addImage(canvas.toDataURL('image/png'), 'PNG', imgX, imgY, ptW, ptH);
+    } catch(e) { origText(text, x, yPos, options); }
+    return doc;
+  };
+  // -------------------------------------
 
   function clean(value){ 
     return String(value ?? '')
       .replace(/<[^>]*>?/gm, '')
-      .replace(/[^\x09\x0A\x0D\x20-\x7E\u00A0-\u024F]/g, '')
       .replace(/\s+/g, ' ')
       .trim(); 
   }
